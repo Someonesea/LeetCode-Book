@@ -1,6 +1,7 @@
 package every_day_do;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ThreeSum {
@@ -33,12 +34,69 @@ public class ThreeSum {
      -105 <= nums[i] <= 105
  */
 
-class Solution {
+class ThreeSumSolution {
     public List<List<Integer>> threeSum(int[] nums) {
-
         List<List<Integer>> res = new ArrayList<>();
+        Arrays.sort(nums);
+        for(int one = 0;one<nums.length;one++){
+            if(one > 0 && nums[one] == nums[one-1]){
+                continue;
+            }
+            int oneNum = -nums[one];
+            int three = nums.length-1;
+            for(int two = one+1;two<nums.length;two++){
+                if(two>one+1 && nums[two] == nums[two-1]){
+                    continue;
+                }
+                while (two< three && nums[two] + nums[three] > oneNum){
+                    three--;
+                }
+                if(two>=three){
+                    break;
+                }
+                if(nums[two] + nums[three] == oneNum){
+                    List<Integer> list = new ArrayList<>();
+                    list.add(nums[one]);
+                    list.add(nums[two]);
+                    list.add(nums[three]);
+                    res.add(list);
+                }
 
+            }
+        }
         return res;
+    }
 
+    public List<List<Integer>> threeSumPractive(int[] nums) {
+        List<List<Integer>> resList = new ArrayList<>();
+        Arrays.sort(nums);
+        int length = nums.length;
+
+        for(int i=0;i<length;i++){
+            int res = -nums[i];
+            int rel = length-1;
+            for(int j= i+1;j<length;j++){
+                // 当前值与前一位值相等，直接跳过遍历
+                if(j>i+1 && nums[j] == nums[j-1]){
+                    continue;
+                }
+                if(j >= rel){
+                    break;
+                }
+                while(j<rel && (nums[j] + nums[rel] > res) ){
+                    rel--;
+                }
+                if(nums[j]+nums[rel] == res){
+                    List<Integer> list = new ArrayList<>();
+                    list.add(nums[i]);
+                    list.add(nums[j]);
+                    list.add(nums[rel]);
+                    resList.add(list);
+                }
+
+            }
+
+        }
+        return resList;
     }
 }
